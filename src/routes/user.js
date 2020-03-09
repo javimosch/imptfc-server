@@ -76,7 +76,10 @@ export default {
         if (req.body.email) {
             filters.email = req.body.email
         }
-        let json = await req.db.collection('user').model().find(filters)
+        let json = await req.db.collection('user').model()
+        
+        .find(filters)
+        .select(req.body.$select&&req.body.$select.split(',').join(' '))
         res.json(json)
     },
     /**

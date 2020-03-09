@@ -1,7 +1,7 @@
 {
-    "name": "pl2-api",
+    "name": "imptfc-server",
     "version": "1.0.0",
-    "description": "",
+    "description": "Fulbito is an open-source platform for football associations/cooperatives.",
     "main": "index.js",
     "type": "module",
     "scripts": {
@@ -10,7 +10,7 @@
         "docs": "npx nodemon --exec 'npx jsdoc -t node_modules/docdash -c jsdoc.json' -e js --watch src/routes",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "",
+    "author": "Javier Leandro Arancibia (arancibiajav@gmail.com)",
     "license": "ISC",
     "dependencies": {
         "connect-mongo": "^3.2.0",

@@ -87,8 +87,11 @@ export default function (app) {
                 module.default.collection_read(req, res)
             })
 
-            app.use(`/${pluralName}`, router)
-            app.use(`/${pluralName}.:format`, (req, res) => {
+            let api = express.Router()
+            app.use('/api',api)
+
+            api.use(`/${pluralName}`, router)
+            api.use(`/${pluralName}.:format`, (req, res) => {
                 let q = Object.keys(req.query).map(k => `${k}=${req.query[k]}`).join('&')
                 res.redirect(`/${pluralName}?_format=${req.params.format}&${q}`)
             })

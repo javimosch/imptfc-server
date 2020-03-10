@@ -38,10 +38,11 @@ export default async function(app) {
         postMiddlewares: [function(req, res, next) {
             let ns = req.body.ns || req.body.namespace || ""
             if (ns === 'helpers') {
-                res.json({
+                return res.json({
                     err: 401
                 })
             }
+            next()
         }],
         allowGet: true,
         allowOverwrite: true,

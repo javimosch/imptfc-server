@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 const modelName = 'org'
 
 /**
@@ -36,7 +37,8 @@ export default {
         if (req.body.email) {
             filters.email = req.body.email
         }
-        let json = await req.db.collection(modelName).model().find(filters).populate("users.user")
+        let json = await req.db.collection(modelName).model()
+        .find(filters).populate({path:"users.user",model: mongoose.model('user')})
         res.json(json)
     },
     /**

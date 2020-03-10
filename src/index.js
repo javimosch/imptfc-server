@@ -1,39 +1,42 @@
 import dotenv from 'dotenv'
 import express from 'express'
-import { default as db, sessionMiddleware, dbMiddleware } from './db.js'
+import { configureConnection, sessionMiddleware, dbMiddleware } from './db.js'
 import jwt from './jwt.js';
 import { createRequire } from 'module';
+import configureFunql from './funql.js'
 import cors from 'cors'
+import configureDynamicRestfulApi from './crud.js'
+
 dotenv.config({ silent: true })
 
-db.init();
-
 const app = express()
-const port = 3000
-
-
+const port = process.env.PORT || 3000
 app.use(cors())
-
 app.use(express.json({
     limit: "100mb"
 }))
-
 app.get('/alive', (req, res) => {
     res.json({
         ok: true
     })
 })
 
-app.use(dbMiddleware())
-app.use(sessionMiddleware())
+async function init() {
+    await configureConnection()
 
-import ('./crud.js').then(module => module.default(app))
-import ('./funql.js').then(module => module.default(app))
+    app.use(dbMiddleware())
+    app.use(sessionMiddleware())
+
+    await configureDynamicRestfulApi(app)
+    await configureFunql(app)
+    app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+}
+init().catch(console.error)
 
 
 /*
 app.get('/', async (req, res) => {
-    
+
     req.session.jwt_token = await jwt.sign({
         name: req.query.name
     })
@@ -41,7 +44,7 @@ app.get('/', async (req, res) => {
 })
 
 app.use('/users', (()=>{
-    
+
     let users = express.Router()
     users.post('/', usersApi.create)
     users.get('/', usersApi.read)
@@ -57,5 +60,3 @@ app.post('/post', async (req, res) => {
     console.log(req.body)
     res.send('Hello World! '+JSON.stringify(req.body))
 })*/
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))

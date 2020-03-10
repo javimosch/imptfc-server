@@ -13,6 +13,7 @@
     "author": "Javier Leandro Arancibia (arancibiajav@gmail.com)",
     "license": "ISC",
     "dependencies": {
+        "btoa": "^1.2.1",
         "connect-mongo": "^3.2.0",
         "cors": "^2.8.5",
         "debug": "^4.1.1",
@@ -26,7 +27,9 @@
         "mongoose": "^5.8.4",
         "node-mailjet": "^3.3.1",
         "pluralize": "^8.0.0",
-        "sander": "^0.6.0"
+        "sander": "^0.6.0",
+        "temp-dir": "^2.0.0",
+        "uniqid": "^5.2.0"
     },
     "devDependencies": {
         "docdash": "^1.1.1",
